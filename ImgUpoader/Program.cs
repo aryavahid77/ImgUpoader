@@ -13,9 +13,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<IAppDbContext,AppDbContext>();
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IImgRepository,ImgRepository>();
-builder.Services.AddScoped<ImgService>();
+builder.Services.AddScoped<IImgService,ImgService>();
+builder.Services.AddScoped<IImgImporter,TextFileImgImporter>();
 
 var app = builder.Build();
 

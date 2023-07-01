@@ -1,5 +1,4 @@
-﻿using ImgUpoader.Application;
-using ImgUpoader.Domain;
+﻿using ImgUpoader.Domain;
 using ImgUpoader.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,9 +6,9 @@ namespace ImgUpoader.Persistance
 {
     public class ImgRepository: IImgRepository
     {
-        AppDbContext _db;
+        IAppDbContext _db;
 
-        public ImgRepository(AppDbContext db)
+        public ImgRepository(IAppDbContext db)
         {
             _db = db;
         }
@@ -30,6 +29,11 @@ namespace ImgUpoader.Persistance
         public async Task<int> SaveChangesAsync()
         {
             return await _db.SaveChangesAsync();
+        }
+
+        public async Task AddRangeAsync(params Img[] imgs)
+        {
+            await _db.Imgs.AddRangeAsync(imgs);
         }
     }
 }

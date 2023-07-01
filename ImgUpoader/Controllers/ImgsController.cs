@@ -8,11 +8,13 @@ namespace ImgUpoader.Controllers;
 [Route("[controller]")]
 public class ImgsController : ControllerBase
 {
-    ImgService _imgservice;
+    IImgService _imgservice;
+    IImgImporter _ImgImporter;
 
-    public ImgsController(ImgService imgservice)
+    public ImgsController(IImgService imgservice, IImgImporter imgImporter)
     {
         _imgservice = imgservice;
+        _ImgImporter = imgImporter;
     }
 
     [HttpPost("[action]")]
@@ -28,5 +30,12 @@ public class ImgsController : ControllerBase
     {
         var lst=await _imgservice.ListAsync(pageSize,pageNo);
         return Ok(lst);
+    }
+
+    [HttpPost("[action]")]
+    public async Task<IActionResult> Import()
+    {
+        await _ImgImporter.Import();
+        return Ok();
     }
 }

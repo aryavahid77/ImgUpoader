@@ -6,7 +6,7 @@ using System.IO;
 
 namespace ImgUpoader.Application;
 
-public class ImgService
+public class ImgService : IImgService
 {
     const string UploadFolder = $"images/user-content";
     IImgRepository _imgRepo;
@@ -19,7 +19,7 @@ public class ImgService
     }
 
 
-    public async Task UploadAsync(IFormFile imgFile)
+    public async Task<int> UploadAsync(IFormFile imgFile)
     {
         var folder = $"{_environment.WebRootPath}/{UploadFolder}";
         (bool success, string localFileName) = await imgFile.UploadFileAsync(folder);
@@ -37,7 +37,7 @@ public class ImgService
 
         await _imgRepo.AddAsync(img);
         var dbSaveResult = await _imgRepo.SaveChangesAsync();
-
+        return dbSaveResult;
     }
 
     public async Task<Paginated<ImgDto>> ListAsync(int pageSize, int pageNo)
