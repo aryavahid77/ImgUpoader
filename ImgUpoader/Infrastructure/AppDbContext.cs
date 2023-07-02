@@ -12,10 +12,3 @@ public class AppDbContext : DbContext, IAppDbContext
     {
     }
 }
-
-public interface IAppDbContext
-{
-    DbSet<Img> Imgs { get; set; }
-
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken=default);
-}

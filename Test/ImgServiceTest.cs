@@ -44,7 +44,7 @@ namespace Test
             //Arrange
             var fileMock = new Mock<IFormFile>();
             //Setup mock file using a memory stream
-            var content = "Hello World from a Fake File";
+            var content = "data:image/png;base64,zsdasdfasdasdasdasdasd";
             var fileName = "test.jpg";
             var ms = new MemoryStream();
             var writer = new StreamWriter(ms);
